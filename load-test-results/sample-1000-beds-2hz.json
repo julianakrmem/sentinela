@@ -1,0 +1,61 @@
+{
+  "startedAt": "2026-11-26T02:05:22.378Z",
+  "config": {
+    "beds": 1000,
+    "intervalMs": 500,
+    "durationS": 45,
+    "seed": 42
+  },
+  "profiles": {
+    "stable": 544,
+    "sepsis": 129,
+    "respiratory": 95,
+    "copd": 69,
+    "recovering": 81,
+    "artifact": 82
+  },
+  "totals": {
+    "sent": 94964,
+    "acked": 94964,
+    "errors": 0,
+    "connectFailures": 0,
+    "disconnects": 0,
+    "unacked": 0,
+    "errorRate": 0
+  },
+  "throughput": {
+    "readingsPerSecond": 1843.5,
+    "targetPerSecond": 2000
+  },
+  "roundTripMs": {
+    "p50": 1.37,
+    "p95": 4.84,
+    "p99": 9.57,
+    "max": 44.56
+  },
+  "alertsDelivered": {
+    "CRITICAL:ESCALATION": 81,
+    "MEDIUM:ESCALATION": 10
+  },
+  "server": {
+    "storage": "redis",
+    "readingsTotal": 126195,
+    "readingsPerSecond": 2091.9,
+    "processingMs": {
+      "p50": 1.11,
+      "p95": 5.04,
+      "p99": 11.45
+    },
+    "alertsTotal": 168,
+    "rejectedTotal": 0,
+    "ingestConnections": 1000,
+    "dashboardClients": 0,
+    "queueDepth": 0,
+    "eventLoopLagMs": 0.2
+  },
+  "slo": {
+    "p95Ms": 100,
+    "maxErrorRate": 0.001
+  },
+  "passed": true
+}

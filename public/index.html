@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sentinela — Painel de Enfermagem</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">◉</span>
+      <div>
+        <h1>Sentinela</h1>
+        <p class="sub">Triagem e alertas em tempo real · NEWS2</p>
+      </div>
+      <span id="conn" class="conn off" title="Conexão com o servidor">desconectado</span>
+    </div>
+
+    <div class="kpis" aria-live="polite">
+      <div class="kpi"><span id="k-beds">0</span><small>leitos</small></div>
+      <div class="kpi crit"><span id="k-crit">0</span><small>críticos</small></div>
+      <div class="kpi high"><span id="k-high">0</span><small>altos</small></div>
+      <div class="kpi med"><span id="k-med">0</span><small>médios</small></div>
+      <div class="kpi lost"><span id="k-lost">0</span><small>sem sinal</small></div>
+      <div class="kpi tech"><span id="k-rps">0</span><small>leituras/s</small></div>
+      <div class="kpi tech"><span id="k-p95">0</span><small>p95 (ms)</small></div>
+    </div>
+
+    <div class="controls">
+      <label class="field">Profissional
+        <input id="nurse" type="text" maxlength="60" placeholder="Enf. (nome)" />
+      </label>
+      <label class="toggle"><input id="only-alert" type="checkbox" /> Só leitos em alerta</label>
+      <label class="toggle"><input id="sound" type="checkbox" /> Som p/ críticos</label>
+    </div>
+  </header>
+
+  <div class="disclaimer">
+    Projeto educacional com <strong>dados 100% sintéticos</strong>. Não é dispositivo médico e não deve orientar condutas reais.
+  </div>
+
+  <main class="layout">
+    <section aria-label="Leitos" class="beds-wrap">
+      <div id="beds" class="beds"></div>
+      <p id="empty" class="empty">Aguardando monitores… rode <code>npm run simulate</code>.</p>
+    </section>
+
+    <aside class="feed" aria-label="Alertas">
+      <div class="feed-head">
+        <h2>Alertas</h2>
+        <div class="legend">
+          <span class="pill CRITICAL">Crítico</span><span class="pill HIGH">Alto</span>
+          <span class="pill MEDIUM">Médio</span><span class="pill INFO">Info</span>
+        </div>
+      </div>
+      <ol id="alerts" class="alerts"></ol>
+    </aside>
+  </main>
+
+  <template id="bed-tpl">
+    <article class="bed">
+      <header>
+        <div>
+          <h3 class="label"></h3>
+          <p class="patient"></p>
+        </div>
+        <span class="badge"></span>
+      </header>
+      <div class="score-row">
+        <div class="score"><span class="n"></span><small>NEWS2</small></div>
+        <div class="trend"></div>
+        <svg class="spark" viewBox="0 0 100 30" preserveAspectRatio="none"><polyline /></svg>
+      </div>
+      <dl class="vitals"></dl>
+      <footer>
+        <span class="updated"></span>
+        <button class="ack" type="button">Reconhecer</button>
+      </footer>
+      <div class="lost-overlay">SEM SINAL</div>
+    </article>
+  </template>
+
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

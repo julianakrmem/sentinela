@@ -1,0 +1,30 @@
+{
+  "name": "sentinela",
+  "version": "1.0.0",
+  "description": "Motor de triagem e alertas clínicos em tempo real (NEWS2) com WebSockets, Redis e painel de enfermagem. Dados 100% sintéticos.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "start": "node dist/src/main.js",
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --import tsx --test test/*.test.ts",
+    "test:redis": "REDIS_URL=redis://localhost:6379/15 node --import tsx --test test/*.test.ts",
+    "simulate": "tsx sim/run.ts --beds 24",
+    "load-test": "tsx sim/run.ts --beds 500 --interval 1000 --duration 60 --quiet --report load-test-results/latest.json",
+    "load-test:stress": "tsx sim/run.ts --beds 1000 --interval 500 --duration 60 --quiet --report load-test-results/stress.json"
+  },
+  "dependencies": {
+    "ioredis": "^5.4.1",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/ws": "^8.5.13",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

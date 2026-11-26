@@ -1,0 +1,28 @@
+# Alertas OPERACIONAIS (saúde do sistema), não clínicos.
+groups:
+  - name: sentinela
+    rules:
+      - alert: SentinelaLatenciaAlta
+        expr: histogram_quantile(0.95, sum(rate(sentinela_processing_duration_ms_bucket[1m])) by (le)) > 50
+        for: 2m
+        labels: { severity: warning }
+        annotations:
+          summary: "p95 de processamento acima de 50 ms"
+      - alert: SentinelaLeiturasRejeitadas
+        expr: sum(rate(sentinela_readings_rejected_total[5m])) / sum(rate(sentinela_readings_total[5m])) > 0.01
+        for: 5m
+        labels: { severity: warning }
+        annotations:
+          summary: "Mais de 1% das leituras rejeitadas (validação ou backpressure)"
+      - alert: SentinelaRedisIndisponivel
+        expr: sentinela_storage_up == 0
+        for: 30s
+        labels: { severity: critical }
+        annotations:
+          summary: "Redis inacessível — janelas temporais e alertas comprometidos"
+      - alert: SentinelaSemLeituras
+        expr: sum(rate(sentinela_readings_total[1m])) == 0 and sentinela_ingest_connections > 0
+        for: 1m
+        labels: { severity: critical }
+        annotations:
+          summary: "Monitores conectados, mas nenhuma leitura processada"

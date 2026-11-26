@@ -1,0 +1,26 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis:7-alpine
+        ports: ["6379:6379"]
+        options: --health-cmd "redis-cli ping" --health-interval 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm install
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run test:redis
+      - name: Teste de carga curto (smoke)
+        run: |
+          REDIS_URL=redis://localhost:6379 npx tsx src/main.ts > server.log &
+          sleep 3
+          npx tsx sim/run.ts --beds 200 --interval 1000 --duration 20 --quiet --report load-test-results/ci.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: load-test, path: load-test-results/ci.json }

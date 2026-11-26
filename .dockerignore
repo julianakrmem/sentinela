@@ -1,0 +1,5 @@
+node_modules
+dist
+load-test-results
+docs
+.git
