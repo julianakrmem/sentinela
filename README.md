@@ -1,5 +1,7 @@
 # Sentinela — Motor de Triagem e Alertas Clínicos em Tempo Real
 
+[![CI](https://github.com/julianakrmem/sentinela/actions/workflows/ci.yml/badge.svg)](https://github.com/julianakrmem/sentinela/actions/workflows/ci.yml)
+
 Serviço que recebe um **fluxo contínuo de sinais vitais** por WebSocket, calcula o **NEWS2** a cada leitura,
 mantém no **Redis** uma janela temporal de cada paciente para detectar **tendência de piora** e dispara
 **alertas priorizados** para um **painel de enfermagem em tempo real**. Inclui simulador de monitores,
